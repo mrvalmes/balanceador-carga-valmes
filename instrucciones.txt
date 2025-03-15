@@ -1,0 +1,32 @@
+#Construir la Imagen Docker
+
+docker build -t nestjs-load-test .
+
+#Ejecutar la Imagen del contenedor
+
+docker run -p 3000:3000 nestjs-load-test
+
+#punto de anclaje
+
+http://localhost:3000/api/load-test
+
+#Manifiestos en kunernetes
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+# verificar
+
+kubectl get pods
+kubectl get services
+
+# Pruebas en Apache
+
+ab -n 1000 -c 100 http://127.0.0.1/api/load-test
+
+./ab -n 1000 -c 100 http://127.0.0.1:3000/api/load-test
+
+
+subir a dockerhub   
+docker tag nestjs-load-test henryvalmes/nestjs-load-test
+docker push henryvalmes/nestjs-load-test
